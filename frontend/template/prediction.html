@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <title>NY Health | Big Data Project </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <link rel = "stylesheet" type = "text/css" href = "../static/css/style.css">
+</head>
+<body>
+  <script src="{% static "js/script.js" %}"></script>
+  <h1> New York State Healthcare Analysis </h1>
+  <button class="tablink" onclick="openPage('home', this, 'red')">Home</button>
+  <button class="tablink" onclick="openPage('dashboard', this, 'green')">Dashboard</button>
+  <button class="tablink" onclick="openPage('prediction', this, 'orange')" id="defaultOpen">Prediction</button>
+  <button class="tablink" onclick="openPage('heatmap', this, 'blue')" >Heatmap</button>
+
+
+  <div id="prediction" class="tabcontent">
+    <h3>Prediction</h3>
+    <p>Based on 2.3 million inpatient records from New York State in 2017, we have developed a simple user interface that can predict the healthcare cost given high-level user information. </p>
+    <form method='post'>
+      {% csrf_token %}
+      <table border="1">
+        {{ form.as_table }}
+      </table>
+      <br>
+      <button type='submit'>Submit</button>
+    </form>
+    <p id="resulttext">Please enter your information above and press <b>Submit</b></p>
+  </div>
+  
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="../static/js/script.js"></script>
+  <script>
+  var Data = {{ data | safe }}
+  function showResult(field1, field2){
+    console.log("here")
+    document.getElementById("resulttext").innerHTML = "Average cost for inpatient care: <b>$" + field1.toString() + "</b> <br> Predicted cost for inpatient care: <b>$" + field2.toString() + "</b>";
+  }
+  showResult(Data[0], Data[1])
+</script>
+
+</body>
+</html> 

@@ -1,0 +1,81 @@
+---
+title: "BirthBias"
+output: html_notebook
+---
+
+The birth data is only for babies, no mothers, so there is no age difference.
+
+## 1. Load data
+```{r}
+library(bigmemory)
+data<-read.delim("~/Desktop/BigData_ProjectData/SPARCS-2017-birth-Bias.csv")
+data<-na.omit(data)
+```
+
+## 2. Process factor data
+Including:
+county,gender,race,ethnity,admission,disposition,severity,mortality,emergency
+```{r}
+y<-data$Average.Charges
+# area<-as.factor(data$Hospital.Service.Area)
+county<-as.factor(data$Hospital.County)
+# facility<-as.factor(data$Facility.Name)
+gender<-as.factor(data$Gender)
+race<-as.factor(data$Race)
+ethnity<-as.factor(data$Ethnicity)
+admission<-as.factor(data$Type.of.Admission)
+disposition<-as.factor(data$Patient.Disposition)
+severity<-factor(data$APR.Severity.of.Illness.Description,order=TRUE,level=c("Minor", "Moderate", "Major", "Extreme"))
+mortality<-factor(data$APR.Risk.of.Mortality,order=TRUE,level=c("Minor", "Moderate", "Major", "Extreme"))
+emergency<-as.factor(data$Emergency.Department.Indicator)
+birthweight<-data$Birth.Weight
+```
+
+```{r}
+interaction.plot(ethnity,race,y)
+interaction.plot(severity,mortality,y)
+```
+
+
+## anova on race
+```{r}
+fit1<-lm(y~race+county+gender+ethnity+admission+disposition+severity+mortality+emergency+birthweight)
+```
+
+```{r}
+summary(fit1)
+```
+```{r}
+anova(fit1)
+```
+race+county+gender+ethnity+admission+disposition+severity+mortality+emergency+birthweight
+
+relatively speaking (also from distribution), admission & emergency disposition+severity+mortality all could ignore.
+
+## Multi-level comparison
+```{r}
+fit<-aov(y~race+county+gender+ethnity+disposition+severity+mortality+emergency)
+summary(fit)
+```
+```{r}
+TukeyHSD(fit)
+```
+
+```{r}
+```
+
+
+```{r}
+fit3<-lm(y~race*county)
+```
+
+```{r}
+aov_fit3<-aov(fit3)
+summary(aov_fit3)
+```
+
+
+```{r}
+TukeyHSD(aov_fit3)
+```
+

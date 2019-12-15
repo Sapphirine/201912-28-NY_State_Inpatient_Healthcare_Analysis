@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <title>NY Health | Big Data Project </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <link rel = "stylesheet" type = "text/css" href = "../static/css/style.css">
+</head>
+<body>
+  <script src="{% static "js/heatmap.js" %}"></script>
+  <script src="{% static "js/script.js" %}"></script>
+  <h1> New York State Healthcare Analysis </h1>
+  <button class="tablink" onclick="openPage('home', this, 'red')">Home</button>
+  <button class="tablink" onclick="openPage('dashboard', this, 'green')" >Dashboard</button>
+  <button class="tablink" onclick="openPage('prediction', this, 'orange')">Prediction</button>
+  <button class="tablink" onclick="openPage('heatmap', this, 'blue')" id="defaultOpen">Heatmap</button>
+
+  <div id="heatmap" class="tabcontent">
+    <h3>Heatmap of Inpatient Healthcare Costs</h3>
+    <p>Our analysis of the dataset helped uncover interesting patterns and trends in healthcare costs across various individual features. To enable users to relate better to the data results, we specifically looked at how differentials in healthcare costs varied from region to region in the state of New York.</p> <br>
+    <p>Use the below fields by first selecting a Diagnosis, then selecting a Category from which you can further select two groups to compare average healthcare costs across the counties of New York State.</p>
+
+    <form method="post" id="heatmapForm" data-group-url="{% url 'ajax_load_dependents' %}" novalidate>
+      {% csrf_token %}
+      <table border="1">
+        {{ form.as_table }}
+      </table>
+      <br>
+      <button type="submit">Submit</button> <br>
+<!--       <p id="resulttext">Please select two fields from above</p>
+ -->    </form>
+    
+  </div>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="//d3js.org/topojson.v1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.11/d3.min.js"></script>
+  <script>
+    updateChoice();
+    var topology = {{ topology | safe }};
+    var values = {{ data | safe }};
+    MapView(topology, values);
+  </script>
+</body>
+</html> 

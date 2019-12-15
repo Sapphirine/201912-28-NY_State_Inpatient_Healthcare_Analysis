@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <title>NY Health | Big Data Project </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <link rel = "stylesheet" type = "text/css" href = "../static/css/style.css">
+</head>
+<body>
+  <script src="{% static "js/dashboard.js" %}"></script>
+  <script src="{% static "js/script.js" %}"></script>
+  <h1> New York State Healthcare Analysis </h1>
+  <button class="tablink" onclick="openPage('home', this, 'red')">Home</button>
+  <button class="tablink" onclick="openPage('dashboard', this, 'green')" id="defaultOpen">Dashboard</button>
+  <button class="tablink" onclick="openPage('prediction', this, 'orange')">Prediction</button>
+  <button class="tablink" onclick="openPage('heatmap', this, 'blue')">Heatmap</button>
+
+  <div id="dashboard" class="tabcontent">
+    <h3>Dashboard</h3>
+    <p>This interface enables the user to get an in depth view of the data patterns in the 2.3 million records from New York State. Select both fields using the drop down menu below to visualize how cardinal data (Age, Zip Code) varies with other key categorical data (Gender, Diagnosis, Race, Ethnicity, Type of Admission, Hospital Service Area).</p> 
+
+    <form method="post">
+      {% csrf_token %}
+      <table border="1">
+        {{ form.as_table }}
+      </table>
+      <br>
+      <button type="submit">Submit</button> <br>
+      <p id="resulttext">Please select two fields from above</p>
+    </form>
+
+  </div>
+
+  <svg class="bar-chart"></svg>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+   <script>
+    var Data = {{ data | safe }}
+    console.log("in HTML")
+    dashboard('#dashboard', Data)
+    function showResult(field1, field2){
+      console.log("here")
+      document.getElementById("resulttext").innerHTML = "Search result for <b>" + field1 + "</b> and <b>" + field2 + "</b>";
+      // document.getElementById('id_field2_choice').value;
+    }
+    showResult(Data.name[0],Data.name[1])
+  </script>
+</body>
+</html> 

@@ -1,0 +1,53 @@
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content (and add height:100% for full page content) */
+.tabcontent {
+  color: gray;
+  padding: 100px 20px;
+  height: 100%;
+}
+
+path {
+  stroke: #483D8B;
+  stroke-width: 1.5px;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    padding: 5px;
+    font: 12px sans-serif;
+    background: snow;
+    border: 0px;
+    pointer-events: none;
+    border: 1px solid #000;
+}
+
+#Home {background-color: white;}
+#Data {background-color: white;}
+#Cluster {background-color: white;}
+#Prediction {background-color: white;}

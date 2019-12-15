@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <title>NY Health | Big Data Project </title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <link rel = "stylesheet" type = "text/css" href = "../static/css/style.css">
+</head>
+<body>
+  <script src="{% static "js/script.js" %}"></script>
+  <h1> New York State Healthcare Analysis </h1>
+  <button class="tablink" onclick="openPage('home', this, 'red')" id="defaultOpen">Home</button>
+  <button class="tablink" onclick="openPage('dashboard', this, 'green')">Dashboard</button>
+  <button class="tablink" onclick="openPage('prediction', this, 'orange')">Prediction</button>
+  <button class="tablink" onclick="openPage('heatmap', this, 'blue')" >Heatmap</button>
+
+
+  <div id="home" class="tabcontent">
+    <h3>Overview</h3>
+    <p>We analyze the New York State Hospital Inpatient Discharges (SPARCS De-Identified): 2017 <a href="https://on.ny.gov/2qa8Qlm" target="_blank">dataset</a>. Our project summarizes the dataset in a meaningful manner using data visualization techniques in D3.js and also layer on big data analytics tools to help extract patterns and insights using dimensionality reduction (tSNE), clustering, and machine learning algorithms for predicting healthcare costs. Finally, we share our results from statistical tests designed to help identify systematic biases across populations.
+      <br><br> The raw data from the official New York State website is roughly 850 MB with over 2.3 milliion records of patient discharge data with each record consisting of 34 different features or fields.
+    </p>
+
+    <h3>Instructions</h3>
+    <p>Use the navigation buttons at the top to explore and visualize the data as well as use our machine learning model to predict healthcare costs given user features. 
+      <li><b>Home</b>: homepage</li>
+      <li><b>Dashboard</b>: Dashboard to visualize data through graphs in interactive manner</li>
+      <li><b>Cluster</b>: Clustering of patient data visualization</li>
+      <li><b>Prediction</b>: Put in user features and allow machine learning alogirhtm to predict your healthcare cost per diem</li>
+    </ul>
+  </p>
+  <ul>
+
+  </div>
+
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="../static/js/script.js"></script>
+
+</body>
+</html> 
