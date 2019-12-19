@@ -1,0 +1,50 @@
+---
+title: "Diagnosis Bias"
+output: html_notebook
+---
+
+
+## 1. Load Data
+```{r}
+library(bigmemory)
+data<-read.delim("~/Desktop/BigData_ProjectData/SPARCS-2017-septicemia-Bias.csv")
+
+```
+
+## 2. Process factor data
+```{r}
+y<-data$Average.Charges
+county<-as.factor(data$Hospital.County)
+age<-factor(data$Age.Group,order=TRUE,level=c("0 to 17","18 to 29","30 to 49", "50 to 69", "70 or Older"))
+gender<-as.factor(data$Gender)
+race<-as.factor(data$Race)
+ethnity<-as.factor(data$Ethnicity)
+admission<-as.factor(data$Type.of.Admission)
+disposition<-as.factor(data$Patient.Disposition)
+severity<-factor(data$APR.Severity.of.Illness.Description,order=TRUE,level=c("Minor", "Moderate", "Major", "Extreme"))
+mortality<-factor(data$APR.Risk.of.Mortality,order=TRUE,level=c("Minor", "Moderate", "Major", "Extreme"))
+surgical<-as.factor(data$APR.Medical.Surgical.Description)
+#emergency<-as.factor(data$Emergency.Department.Indicator)
+```
+
+## 3. Check interaction
+```{r}
+interaction.plot(gender,age,y)
+interaction.plot(race,age,y)
+interaction.plot(county,age,y)
+```
+
+## anova
+```{r}
+fit1<-lm(y~age+gender+race+county+ethnity+admission+disposition+severity+mortality+surgical)
+#summary(fit1)
+```
+
+```{r}
+anova(fit1)
+```
+
+```{r}
+TukeyHSD(aov(fit1))
+```
+
